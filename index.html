@@ -1,0 +1,1982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus — AI Marketing Pipeline for Dublin SMEs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #eef1f8;
+  --surface:  #ffffff;
+  --surface2: #f5f7fd;
+  --border:   #dde3f0;
+  --border2:  #c8d1e8;
+  --text:     #141c2e;
+  --body:     #374060;
+  --muted:    #7888a8;
+  --faint:    #a8b4cc;
+
+  --a1: #0ea5e9; --r1: 14,165,233;
+  --a2: #7c3aed; --r2: 124,58,237;
+  --a3: #059669; --r3: 5,150,105;
+  --a4: #ea580c; --r4: 234,88,12;
+  --a5: #db2777; --r5: 219,39,119;
+
+  --grad: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+html, body { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════
+   SIDEBAR
+═══════════════════════════════ */
+.sidebar {
+  width: 320px;
+  min-width: 320px;
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 32px 24px 24px;
+  z-index: 2;
+  overflow-y: auto;
+  box-shadow: 2px 0 20px rgba(100,116,160,0.06);
+}
+
+/* logo */
+.logo-wrap { margin-bottom: 28px; }
+
+.logo-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1));
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 99px;
+  padding: 3px 10px 3px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #6366f1;
+  margin-bottom: 12px;
+}
+
+.eyebrow-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #6366f1;
+  animation: eyedot 2.4s ease-in-out infinite;
+}
+
+@keyframes eyedot {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:0.3; transform:scale(0.65); }
+}
+
+.logo-title {
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: -0.8px;
+  color: var(--text);
+  line-height: 1;
+}
+
+.logo-title span {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo-sub {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+.divider { height: 1px; background: var(--border); margin-bottom: 22px; }
+
+/* fields */
+.field { margin-bottom: 16px; }
+
+.field-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+
+.field-label svg { opacity: 0.7; }
+
+.f-input, .f-textarea {
+  width: 100%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.f-input {
+  padding: 9px 13px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11.5px;
+}
+
+.f-textarea {
+  padding: 10px 13px;
+  line-height: 1.7;
+  min-height: 130px;
+  resize: vertical;
+}
+
+.f-input:focus, .f-textarea:focus {
+  outline: none;
+  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+  background: var(--surface);
+}
+
+.f-input::placeholder  { color: var(--faint); }
+.f-textarea::placeholder { color: var(--faint); }
+
+.f-hint {
+  font-size: 11px;
+  color: var(--faint);
+  margin-top: 5px;
+}
+
+/* launch */
+.launch-btn {
+  width: 100%;
+  background: var(--grad);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+  box-shadow: 0 4px 18px rgba(99,102,241,0.35);
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.launch-btn:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 24px rgba(99,102,241,0.42);
+}
+
+.launch-btn:disabled {
+  background: var(--border);
+  color: var(--faint);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.err-box {
+  display: none;
+  margin-top: 10px;
+  padding: 10px 13px;
+  background: #fff1f2;
+  border: 1.5px solid #fecdd3;
+  border-radius: 8px;
+  color: #be123c;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* footer */
+.sb-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--faint);
+  text-align: center;
+  line-height: 1.9;
+}
+
+/* ═══════════════════════════════
+   MAIN
+═══════════════════════════════ */
+.main {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 36px 40px 80px;
+}
+
+.main::-webkit-scrollbar { width: 5px; }
+.main::-webkit-scrollbar-track { background: transparent; }
+.main::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+/* ── STEPPER ── */
+.stepper {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 26px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  gap: 0;
+}
+
+.stepper::-webkit-scrollbar { height: 0; }
+
+.stp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.stp-ring {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--faint);
+  letter-spacing: -0.5px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.stp-ring svg {
+  width: 19px;
+  height: 19px;
+  stroke: var(--faint);
+  transition: stroke 0.3s;
+  flex-shrink: 0;
+}
+
+.stp.working .stp-ring {
+  background: rgba(var(--scr), 0.1);
+  border-color: var(--sc);
+  box-shadow: 0 0 0 5px rgba(var(--scr), 0.12);
+  animation: stepglow 1.8s ease-in-out infinite;
+}
+
+.stp.working .stp-ring svg { stroke: var(--sc); }
+
+.stp.done .stp-ring {
+  background: rgba(var(--scr), 0.08);
+  border-color: rgba(var(--scr), 0.5);
+}
+
+.stp.done .stp-ring svg { stroke: var(--sc); }
+
+@keyframes stepglow {
+  0%,100% { box-shadow: 0 0 0 5px rgba(var(--scr), 0.12); }
+  50%      { box-shadow: 0 0 0 10px rgba(var(--scr), 0.04); }
+}
+
+.stp-name {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--muted);
+  text-align: center;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.stp.working .stp-name { color: var(--sc); }
+.stp.done    .stp-name { color: var(--sc); opacity: 0.7; }
+
+.stp-role {
+  font-size: 9.5px;
+  color: var(--faint);
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.2px;
+  margin-top: -5px;
+}
+
+.stp-line {
+  flex: 1;
+  min-width: 20px;
+  height: 2px;
+  background: var(--border);
+  margin-top: -52px;
+  border-radius: 99px;
+  transition: background 0.4s;
+  flex-shrink: 0;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.stp-line.lit { background: var(--lc); }
+
+/* ── PROGRESS ── */
+.prog-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.prog-track {
+  flex: 1;
+  height: 5px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #a78bfa);
+  border-radius: 99px;
+  width: 0;
+  transition: width 0.55s cubic-bezier(0.4,0,0.2,1);
+}
+
+.prog-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+  min-width: 40px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── AGENT PANELS ── */
+.panels { display: flex; flex-direction: column; gap: 12px; }
+
+.panel {
+  background: var(--surface);
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s, opacity 0.3s;
+  box-shadow: 0 1px 6px rgba(60,80,120,0.05);
+}
+
+.panel.idle { opacity: 0.45; }
+
+.panel.working {
+  opacity: 1;
+  border-color: rgba(var(--pcr), 0.45);
+  box-shadow:
+    0 0 0 3px rgba(var(--pcr), 0.08),
+    0 4px 24px rgba(var(--pcr), 0.12),
+    0 1px 6px rgba(60,80,120,0.05);
+}
+
+.panel.done {
+  opacity: 1;
+  border-color: rgba(var(--pcr), 0.22);
+  box-shadow: 0 2px 12px rgba(60,80,120,0.07);
+}
+
+.panel-hd {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1.5px solid transparent;
+  transition: background 0.2s, border-color 0.3s;
+}
+
+.panel.done .panel-hd:hover    { background: var(--surface2); }
+.panel.done    .panel-hd       { border-bottom-color: var(--border); }
+.panel.working .panel-hd       { border-bottom-color: rgba(var(--pcr), 0.15); }
+
+/* colored left stripe via box-shadow on hd */
+.panel-hd::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 36px;
+  border-radius: 99px;
+  background: var(--pc);
+  flex-shrink: 0;
+  opacity: 0.18;
+  transition: opacity 0.3s;
+}
+
+.panel.working .panel-hd::before { opacity: 1; }
+.panel.done    .panel-hd::before { opacity: 0.55; }
+
+/* agent icon tile */
+.pnl-icon-tile {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(var(--pcr), 0.1);
+  border: 1px solid rgba(var(--pcr), 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pnl-icon-tile svg {
+  width: 17px;
+  height: 17px;
+  stroke: var(--pc);
+  stroke-width: 2;
+  fill: none;
+}
+
+.pnl-num-badge {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background: rgba(var(--pcr), 0.12);
+  color: var(--pc);
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  border: 1.5px solid white;
+}
+
+.pnl-tile-wrap { position: relative; flex-shrink: 0; }
+
+.pnl-info { flex: 1; min-width: 0; }
+
+.pnl-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: -0.1px;
+}
+
+.pnl-role {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* status badge */
+.pnl-badge {
+  flex-shrink: 0;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  padding: 4px 11px;
+  border-radius: 99px;
+}
+
+.pb-wait {
+  background: var(--surface2);
+  color: var(--faint);
+  border: 1.5px solid var(--border);
+}
+
+.pb-working {
+  background: rgba(var(--pcr), 0.1);
+  color: var(--pc);
+  border: 1.5px solid rgba(var(--pcr), 0.3);
+  animation: workblink 1.3s ease-in-out infinite;
+}
+
+@keyframes workblink { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+.pb-done {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1.5px solid #a7f3d0;
+}
+
+/* chevron */
+.pnl-chv {
+  flex-shrink: 0;
+  color: var(--faint);
+  font-size: 11px;
+  transition: transform 0.22s;
+  margin-left: 4px;
+}
+
+.panel.done.collapsed .pnl-chv { transform: rotate(-90deg); }
+.panel.done.expanded  .pnl-chv { transform: rotate(0deg);   }
+
+/* output */
+.pnl-output {
+  display: none;
+  padding: 20px 22px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--body);
+  word-break: break-word;
+  max-height: 520px;
+  overflow-y: auto;
+  background: var(--surface2);
+  border-top: 1.5px solid var(--border);
+}
+
+.pnl-output.show { display: block; }
+.pnl-output::-webkit-scrollbar { width: 4px; }
+.pnl-output::-webkit-scrollbar-track { background: transparent; }
+.pnl-output::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+/* ── AGENT OUTPUT COMPONENTS ── */
+.r-block { margin-bottom: 20px; }
+.r-block:last-child { margin-bottom: 0; }
+
+.r-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(var(--pcr),.1); color: var(--pc);
+  border: 1px solid rgba(var(--pcr),.22);
+  border-radius: 6px; padding: 3px 10px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.r-tag--g { background:#ecfdf5; color:#059669; border-color:#a7f3d0; }
+.r-tag--a { background:#fffbeb; color:#d97706; border-color:#fde68a; }
+
+/* profile card */
+.r-profile { display:flex; gap:14px; align-items:flex-start; background:var(--surface); border:1.5px solid var(--border); border-radius:12px; padding:14px 16px; }
+.r-avatar { width:44px; height:44px; border-radius:50%; background:rgba(var(--pcr),.1); border:1.5px solid rgba(var(--pcr),.2); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.r-profile-text { font-size:13px; color:var(--body); line-height:1.55; }
+.r-profile-sub { font-size:12px; color:var(--muted); margin-top:5px; line-height:1.5; }
+
+/* alert cards */
+.r-alert { display:flex; gap:10px; align-items:flex-start; padding:11px 14px; border-radius:10px; margin-bottom:7px; font-size:13px; line-height:1.5; }
+.r-alert--warn { background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; }
+.r-alert-ico { font-size:14px; flex-shrink:0; margin-top:1px; }
+
+/* competitor */
+.r-comp { background:var(--surface); border:1.5px solid var(--border); border-radius:10px; padding:12px 14px; margin-bottom:8px; }
+.r-comp-name { font-size:13px; font-weight:700; color:var(--text); margin-bottom:4px; }
+.r-comp-w { font-size:12px; color:#b45309; margin-bottom:3px; }
+.r-comp-g { font-size:12px; color:#059669; }
+
+/* pills */
+.r-pills { display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+.r-pill { font-size:11px; font-weight:600; padding:3px 10px; border-radius:99px; border:1px solid; }
+.r-pill--m { background:var(--surface); border-color:var(--border); color:var(--muted); }
+.r-pill--h { background:rgba(var(--pcr),.08); border-color:rgba(var(--pcr),.2); color:var(--pc); }
+.r-pill--g { background:#ecfdf5; border-color:#a7f3d0; color:#059669; }
+.r-pill--b { background:#eff6ff; border-color:#bfdbfe; color:#1d4ed8; }
+.r-pill--p { background:#fdf4ff; border-color:#e9d5ff; color:#7c3aed; }
+.r-voice-pill { padding:5px 14px; border-radius:99px; font-size:12px; font-weight:700; border:1.5px solid; }
+.r-vp0{background:rgba(14,165,233,.08);color:#0369a1;border-color:rgba(14,165,233,.25);}
+.r-vp1{background:rgba(124,58,237,.08);color:#6d28d9;border-color:rgba(124,58,237,.25);}
+.r-vp2{background:rgba(5,150,105,.08);color:#047857;border-color:rgba(5,150,105,.25);}
+.r-vp3{background:rgba(234,88,12,.08);color:#c2410c;border-color:rgba(234,88,12,.25);}
+.r-vp4{background:rgba(219,39,119,.08);color:#be185d;border-color:rgba(219,39,119,.25);}
+
+/* opportunity / tip cards */
+.r-opp { display:flex; gap:12px; align-items:flex-start; padding:12px 14px; background:var(--surface); border:1.5px solid rgba(var(--pcr),.15); border-radius:10px; margin-bottom:8px; }
+.r-opp-n { min-width:24px; height:24px; background:rgba(var(--pcr),.1); color:var(--pc); border-radius:6px; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.r-opp-title { font-size:13px; font-weight:700; color:var(--text); margin-bottom:2px; }
+.r-opp-detail { font-size:12.5px; color:var(--muted); line-height:1.5; }
+
+/* quote / positioning */
+.r-quote { font-size:16px; font-weight:700; color:var(--text); line-height:1.45; padding:15px 18px; background:linear-gradient(135deg,rgba(var(--pcr),.05),rgba(var(--pcr),.1)); border:1.5px solid rgba(var(--pcr),.2); border-left:4px solid var(--pc); border-radius:10px; letter-spacing:-.2px; }
+
+/* message cards */
+.r-msg { background:var(--surface); border:1.5px solid var(--border); border-radius:10px; padding:13px 15px; margin-bottom:8px; }
+.r-msg-type { font-size:10px; font-weight:700; text-transform:uppercase; color:var(--muted); letter-spacing:.5px; margin-bottom:5px; }
+.r-msg-hl { font-size:15px; font-weight:800; color:var(--text); margin-bottom:4px; letter-spacing:-.2px; }
+.r-msg-body { font-size:12px; color:var(--muted); line-height:1.5; }
+
+/* pillar cards */
+.r-pillar { display:flex; gap:12px; align-items:flex-start; background:var(--surface); border:1.5px solid rgba(var(--pcr),.15); border-radius:10px; padding:12px 14px; margin-bottom:8px; }
+.r-pillar-n { width:28px; height:28px; background:rgba(var(--pcr),.1); color:var(--pc); border-radius:7px; font-size:13px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.r-pillar-name { font-size:13px; font-weight:700; color:var(--text); margin-bottom:3px; }
+.r-pillar-desc { font-size:12px; color:var(--muted); line-height:1.5; }
+
+/* campaign cards */
+.r-camp { background:linear-gradient(135deg,rgba(var(--pcr),.04),rgba(var(--pcr),.09)); border:1.5px solid rgba(var(--pcr),.18); border-radius:10px; padding:14px 16px; margin-bottom:8px; }
+.r-camp-title { font-size:14px; font-weight:800; color:var(--text); margin-bottom:5px; }
+.r-camp-concept { font-size:12.5px; color:var(--body); line-height:1.55; }
+
+/* platform headers */
+.r-plat { display:flex; align-items:center; gap:8px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; padding:6px 11px; border-radius:8px; margin-bottom:10px; border:1px solid; }
+.r-plat--ig{background:#fdf2f8;color:#be185d;border-color:#fbcfe8;}
+.r-plat--fb{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe;}
+.r-plat--li{background:#f0f9ff;color:#0369a1;border-color:#bae6fd;}
+.r-plat--ad{background:#fff7ed;color:#c2410c;border-color:#fed7aa;}
+.r-plat--sms{background:#f0fdf4;color:#15803d;border-color:#bbf7d0;}
+.r-plat--em{background:#fdf4ff;color:#7c3aed;border-color:#e9d5ff;}
+.r-plat--vid{background:#fef2f2;color:#dc2626;border-color:#fecaca;}
+
+/* caption box */
+.r-caption { font-size:13px; line-height:1.65; color:var(--body); background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px 14px; margin-bottom:8px; white-space:pre-wrap; }
+
+/* ad card */
+.r-ad { background:var(--surface); border:1.5px solid var(--border); border-radius:8px; padding:14px 16px; margin-top:8px; }
+.r-ad-hl { font-size:17px; font-weight:900; color:var(--text); margin-bottom:7px; letter-spacing:-.3px; }
+.r-ad-body { font-size:13px; color:var(--body); line-height:1.6; margin-bottom:10px; }
+.r-ad-cta { display:inline-block; background:var(--grad); color:#fff; padding:7px 16px; border-radius:7px; font-size:12px; font-weight:700; }
+
+/* sms bubble */
+.r-sms { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px 12px 12px 3px; padding:12px 15px; font-size:13.5px; color:#14532d; line-height:1.55; display:inline-block; max-width:90%; }
+
+/* email rows */
+.r-email { display:flex; gap:10px; align-items:center; padding:9px 12px; background:var(--surface); border:1px solid var(--border); border-radius:8px; margin-bottom:6px; font-size:13px; color:var(--body); }
+.r-email-ab { width:20px; height:20px; background:rgba(var(--pcr),.1); color:var(--pc); border-radius:5px; font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+/* video storyboard */
+.r-storyboard { background:#fef2f2; border:1px solid #fecaca; border-radius:8px; overflow:hidden; margin-top:8px; }
+.r-sb-row { display:flex; align-items:stretch; border-bottom:1px solid #fecaca; }
+.r-sb-row:last-child { border-bottom:none; }
+.r-sb-time { min-width:52px; padding:10px 6px; background:#fee2e2; font-size:9.5px; font-weight:800; text-transform:uppercase; color:#dc2626; display:flex; align-items:center; justify-content:center; letter-spacing:.3px; text-align:center; flex-shrink:0; }
+.r-sb-text { padding:10px 12px; font-size:12.5px; color:#7f1d1d; line-height:1.5; }
+
+/* channel cards */
+.r-channels { display:flex; flex-direction:column; gap:8px; }
+.r-chan { padding:12px 14px; border-radius:10px; border:1.5px solid; }
+.r-chan-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
+.r-chan-name { font-size:13px; font-weight:700; color:var(--text); }
+.r-chan-pri { font-size:9.5px; font-weight:800; padding:2px 8px; border-radius:99px; border:1px solid; text-transform:uppercase; letter-spacing:.4px; }
+.r-chan-why { font-size:12px; color:var(--muted); line-height:1.5; }
+
+/* schedule */
+.r-sched { border:1.5px solid var(--border); border-radius:10px; overflow:hidden; }
+.r-sched-row { display:flex; align-items:stretch; border-bottom:1px solid var(--border); }
+.r-sched-row:last-child { border-bottom:none; }
+.r-sched-day { min-width:44px; padding:10px 6px; background:rgba(var(--pcr),.06); font-size:10px; font-weight:800; text-transform:uppercase; color:var(--pc); display:flex; align-items:center; justify-content:center; flex-shrink:0; border-right:1px solid var(--border); }
+.r-sched-body { padding:8px 12px; flex:1; }
+.r-sched-plat { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.3px; }
+.r-sched-type { display:inline-block; font-size:10px; background:rgba(var(--pcr),.1); color:var(--pc); border-radius:4px; padding:1px 6px; font-weight:700; margin:2px 0; }
+.r-sched-topic { font-size:12.5px; color:var(--body); line-height:1.45; }
+
+/* hashtag sections */
+.r-ht-grp { margin-bottom:10px; }
+.r-ht-lbl { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; margin-bottom:5px; }
+
+/* tip rows */
+.r-tip { display:flex; gap:8px; align-items:flex-start; padding:8px 12px; background:var(--surface); border:1px solid var(--border); border-radius:8px; margin-bottom:6px; font-size:12.5px; color:var(--body); line-height:1.5; }
+.r-tip-arrow { color:var(--pc); font-weight:900; flex-shrink:0; }
+
+/* evaluation */
+.r-eval { font-size:13.5px; line-height:1.65; color:var(--body); padding:15px 18px; background:var(--surface); border:1.5px solid var(--border); border-left:4px solid var(--pc); border-radius:10px; }
+
+/* strengths / weaknesses grid */
+.r-sw { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.r-sw-item { display:flex; gap:8px; align-items:flex-start; padding:10px 12px; border-radius:8px; font-size:12.5px; line-height:1.5; margin-bottom:6px; }
+.r-sw-str { background:#f0fdf4; border:1px solid #bbf7d0; color:#14532d; }
+.r-sw-wk  { background:#fffbeb; border:1px solid #fde68a; color:#713f12; }
+.r-sw-ico { font-size:12px; font-weight:900; flex-shrink:0; margin-top:2px; }
+
+/* rec cards */
+.r-rec { display:flex; gap:12px; align-items:flex-start; padding:13px 15px; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; margin-bottom:8px; }
+.r-rec-p { min-width:28px; height:28px; background:rgba(var(--pcr),.1); color:var(--pc); border-radius:7px; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.r-rec-act { font-size:13px; color:var(--body); line-height:1.55; }
+
+/* timeline */
+.r-tl { padding-left:14px; }
+.r-tl-item { display:flex; gap:14px; align-items:flex-start; padding-bottom:16px; position:relative; }
+.r-tl-item:last-child { padding-bottom:0; }
+.r-tl-item::before { content:''; position:absolute; left:-10px; top:18px; bottom:0; width:2px; background:var(--border); }
+.r-tl-item:last-child::before { display:none; }
+.r-tl-dot { width:10px; height:10px; border-radius:50%; background:var(--pc); flex-shrink:0; margin-top:5px; border:2px solid var(--surface2); box-shadow:0 0 0 2px rgba(var(--pcr),.2); }
+.r-tl-dot--last { background:#059669; box-shadow:0 0 0 2px rgba(5,150,105,.2); }
+.r-tl-label { font-size:11px; font-weight:800; color:var(--pc); text-transform:uppercase; letter-spacing:.3px; margin-bottom:3px; }
+.r-tl-text { font-size:13px; color:var(--body); line-height:1.55; }
+
+/* confidence score */
+.r-score { display:flex; gap:16px; align-items:center; padding:16px 18px; border-radius:12px; border:1.5px solid; flex-wrap:wrap; }
+.r-score-n { font-size:44px; font-weight:900; line-height:1; letter-spacing:-2px; flex-shrink:0; }
+.r-score-d { font-size:18px; font-weight:500; opacity:.45; letter-spacing:0; }
+.r-score-right { flex:1; min-width:150px; }
+.r-score-bar { height:6px; background:rgba(0,0,0,.07); border-radius:99px; overflow:hidden; margin-bottom:8px; }
+.r-score-fill { height:100%; border-radius:99px; }
+.r-score-why { font-size:12.5px; color:var(--muted); line-height:1.5; }
+
+/* images */
+.cf-img-wrap { margin:0 0 0; border-radius:0; overflow:hidden; border:none; }
+.cf-img-loader { padding:42px 20px; text-align:center; color:var(--muted); font-size:12px; background:linear-gradient(135deg,var(--surface2),#e8ecf8); display:flex; align-items:center; justify-content:center; gap:6px; min-height:180px; }
+.cf-img-dots span { animation:dotblink 1.4s ease-in-out infinite; opacity:0; font-size:16px; }
+.cf-img-dots span:nth-child(2) { animation-delay:.2s; }
+.cf-img-dots span:nth-child(3) { animation-delay:.4s; }
+@keyframes dotblink { 0%,80%,100%{opacity:0} 40%{opacity:1} }
+@keyframes spin { to { transform:rotate(360deg); } }
+.cf-img { width:100%; display:block; }
+.cf-img-cap { padding:6px 12px; font-size:10px; color:var(--faint); font-style:italic; background:var(--surface2); line-height:1.4; }
+
+/* social media mockup cards */
+.sm-card { background:#fff; border:1.5px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 16px rgba(60,80,120,0.08); }
+.sm-card-header { display:flex; align-items:center; gap:10px; padding:12px 14px; }
+.sm-avatar { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; color:#fff; flex-shrink:0; }
+.sm-avatar--ig { background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+.sm-avatar--fb { background:#1877f2; }
+.sm-avatar--li { background:#0a66c2; }
+.sm-handle { font-size:13px; font-weight:700; color:var(--text); }
+.sm-loc { font-size:11px; color:var(--muted); }
+.sm-more { margin-left:auto; font-size:18px; color:var(--muted); letter-spacing:1px; }
+.sm-actions { display:flex; gap:14px; padding:10px 14px 4px; font-size:22px; }
+.sm-action { cursor:pointer; }
+.sm-save { margin-left:auto; }
+.sm-caption { padding:4px 14px 10px; font-size:13px; color:var(--body); line-height:1.55; }
+.sm-tags { padding:0 14px 12px; gap:5px; }
+
+.sm-card--ig .cf-img-wrap { border-radius:0; }
+.sm-card--fb .cf-img-wrap { border-radius:0; }
+.sm-card--li .cf-img-wrap { border-radius:0; }
+
+.sm-fb-caption { padding:12px 14px 10px; font-size:13px; color:var(--body); line-height:1.6; }
+.sm-fb-react { display:flex; gap:0; border-top:1px solid var(--border); }
+.sm-fb-react span { flex:1; text-align:center; padding:10px 6px; font-size:12px; font-weight:600; color:var(--muted); cursor:pointer; }
+.sm-fb-react span:hover { background:var(--surface2); }
+
+.sm-card--ad { overflow:hidden; }
+.ad-body-wrap { padding:14px 16px 16px; background:#fff; }
+.ad-sponsored { font-size:10px; color:var(--faint); margin-bottom:6px; }
+
+.cf-two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+.sms-phone { background:#1a1a2e; border-radius:14px; padding:14px; }
+.sms-screen { background:#0d0d1a; border-radius:10px; padding:14px; min-height:90px; }
+.sms-bubble { background:#0a84ff; color:#fff; border-radius:16px 16px 4px 16px; padding:10px 13px; font-size:12.5px; line-height:1.55; display:inline-block; max-width:90%; }
+.sms-time { font-size:10px; color:#666; text-align:right; margin-top:5px; }
+
+.email-preview { display:flex; flex-direction:column; gap:6px; }
+.r-email { display:flex; gap:10px; align-items:center; padding:10px 12px; background:var(--surface); border:1px solid var(--border); border-radius:9px; }
+.r-email-ab { width:22px; height:22px; background:rgba(var(--pcr),.1); color:var(--pc); border-radius:5px; font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.r-email-txt { font-size:12.5px; color:var(--body); line-height:1.4; }
+
+.sm-card--vid { overflow:hidden; }
+.vid-thumb-wrap { position:relative; }
+.vid-play-btn { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:52px; height:52px; background:rgba(0,0,0,.6); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; color:#fff; pointer-events:none; }
+.vid-duration { position:absolute; bottom:8px; right:10px; background:rgba(0,0,0,.75); color:#fff; font-size:10px; font-weight:700; padding:2px 6px; border-radius:4px; }
+
+/* ── GOOGLE ADS MOCKUP ── */
+.gads-wrap { background:#fff; border:1.5px solid var(--border); border-radius:12px; padding:16px 18px; }
+.gads-top { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.gads-badge { font-size:9px; font-weight:800; border:1.5px solid #059669; color:#059669; border-radius:3px; padding:1px 5px; letter-spacing:.4px; flex-shrink:0; }
+.gads-url { font-size:12px; color:#202124; }
+.gads-headlines { font-size:18px; font-weight:400; color:#1a0dab; line-height:1.3; margin-bottom:5px; }
+.gads-headlines span { color:#c5c5c5; font-weight:300; padding:0 4px; }
+.gads-desc { font-size:13px; color:#4d5156; line-height:1.5; }
+.gads-desc + .gads-desc { margin-top:2px; }
+.gads-chars { display:flex; gap:8px; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); flex-wrap:wrap; }
+.gads-char { font-size:10px; background:var(--surface2); border:1px solid var(--border); border-radius:5px; padding:3px 8px; color:var(--muted); }
+.gads-char strong { color:var(--text); }
+
+/* ── FACEBOOK AD MOCKUP ── */
+.fb-ad-wrap { background:#fff; border:1.5px solid var(--border); border-radius:12px; overflow:hidden; }
+.fb-ad-header { display:flex; align-items:center; gap:10px; padding:12px 14px 8px; }
+.fb-ad-page { font-size:13px; font-weight:700; color:var(--text); }
+.fb-ad-sponsored { font-size:11px; color:var(--muted); }
+.fb-ad-primary { padding:4px 14px 10px; font-size:13px; color:var(--body); line-height:1.6; }
+.fb-ad-footer { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:#f0f2f5; border-top:1px solid var(--border); gap:10px; }
+.fb-ad-copy { flex:1; min-width:0; }
+.fb-ad-hl { font-size:14px; font-weight:800; color:var(--text); line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.fb-ad-cta-btn { background:#1877f2; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:12px; font-weight:700; cursor:default; flex-shrink:0; white-space:nowrap; }
+
+/* ── REEL SCRIPT ── */
+.reel-card { display:flex; gap:16px; align-items:flex-start; }
+.reel-phone-wrap { flex-shrink:0; width:110px; }
+.reel-phone-inner { position:relative; border-radius:12px; overflow:hidden; background:#111; aspect-ratio:9/16; }
+.reel-phone-inner .cf-img-wrap { height:100%; }
+.reel-phone-inner .cf-img-loader { min-height:0; height:100%; width:100%; }
+.reel-phone-inner .cf-img { width:100%; height:100%; object-fit:cover; display:block; }
+.reel-play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:34px; height:34px; background:rgba(0,0,0,.55); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; color:#fff; pointer-events:none; }
+.reel-script-rows { flex:1; border:1.5px solid var(--border); border-radius:10px; overflow:hidden; }
+.reel-row { display:flex; align-items:stretch; border-bottom:1px solid var(--border); }
+.reel-row:last-child { border-bottom:none; }
+.reel-timecol { min-width:52px; padding:9px 4px; background:rgba(var(--pcr),.06); font-size:9px; font-weight:800; color:var(--pc); text-transform:uppercase; letter-spacing:.3px; display:flex; align-items:center; justify-content:center; text-align:center; flex-shrink:0; border-right:1px solid var(--border); }
+.reel-labelcol { min-width:58px; padding:9px 8px; font-size:9.5px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.3px; display:flex; align-items:center; flex-shrink:0; border-right:1px solid var(--border); background:var(--surface2); }
+.reel-textcol { padding:9px 12px; font-size:12.5px; color:var(--body); line-height:1.5; }
+
+/* ── DONE SECTION ── */
+.done-wrap {
+  display: none;
+  margin-top: 20px;
+  padding: 28px 30px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f0f1ff 0%, #f5f0ff 100%);
+  border: 1.5px solid rgba(99,102,241,0.2);
+  box-shadow: 0 4px 24px rgba(99,102,241,0.08);
+}
+
+.done-wrap.show { display: block; }
+
+.done-h { font-size: 22px; font-weight: 900; color: var(--text); letter-spacing: -0.4px; margin-bottom: 4px; }
+.done-s { font-size: 12.5px; color: var(--muted); margin-bottom: 20px; }
+
+.done-acts { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.btn-dl {
+  background: var(--grad);
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  padding: 10px 22px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 4px 14px rgba(99,102,241,0.3);
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.btn-dl:hover { opacity: 0.85; transform: translateY(-1px); }
+
+.btn-rst {
+  background: var(--surface);
+  color: var(--muted);
+  border: 1.5px solid var(--border2);
+  border-radius: 9px;
+  padding: 10px 22px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.2s;
+}
+
+.btn-rst:hover { border-color: #818cf8; color: #6366f1; }
+
+/* ── INTRO ── */
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 72px 24px;
+}
+
+.intro-icon-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1));
+  border: 1.5px solid rgba(99,102,241,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.intro-icon-wrap svg {
+  width: 28px;
+  height: 28px;
+  stroke: #6366f1;
+  stroke-width: 1.8;
+  fill: none;
+  opacity: 0.7;
+}
+
+.intro-h { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -0.3px; }
+.intro-p { font-size: 13px; color: var(--muted); max-width: 290px; line-height: 1.75; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 760px) {
+  body { flex-direction: column; overflow: auto; }
+  .sidebar { width: 100%; min-width: unset; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--border); }
+  .main { height: auto; overflow-y: visible; padding: 24px 16px 56px; }
+  .stp-role { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ SIDEBAR ═══════════ -->
+<aside class="sidebar">
+
+  <div class="logo-wrap">
+    <div class="logo-eyebrow">
+      <div class="eyebrow-dot"></div>
+      AI Marketing Pipeline &nbsp;·&nbsp; Dublin SMEs
+    </div>
+    <div class="logo-title">Nex<span>us</span></div>
+    <div class="logo-sub">One brief. Five agents. A campaign that works.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="field">
+    <div class="field-label">
+      <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Anthropic API Key
+    </div>
+    <input type="password" class="f-input" id="apiKey" placeholder="sk-ant-api03-…" autocomplete="off" spellcheck="false" />
+    <div class="f-hint">Sent directly to api.anthropic.com — never stored.</div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">
+      <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Client Brief
+    </div>
+    <textarea class="f-textarea" id="brief"
+      placeholder="Describe your Dublin business...&#10;&#10;e.g. 'A family-run artisan bakery in Ranelagh, Dublin 6. Sourdough, pastries, and specialty coffee since 2021. We want to grow Instagram from 800 to 5,000 followers and attract more 25–40 year olds.'"></textarea>
+  </div>
+
+  <div class="err-box" id="err"></div>
+
+  <button class="launch-btn" id="goBtn" onclick="run()">
+    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3" fill="white" stroke="none"/></svg>
+    Launch the Agency
+  </button>
+
+  <div class="sb-footer">
+    Powered by Claude Haiku 4.5 · Anthropic<br>
+    Nexus &nbsp;·&nbsp; H9CEAI &nbsp;·&nbsp; NCI Dublin
+  </div>
+
+</aside>
+
+<!-- ═══════════ MAIN ═══════════ -->
+<main class="main">
+
+  <!-- STEPPER -->
+  <div class="stepper">
+
+    <div class="stp idle" id="s0" style="--sc:var(--a1);--scr:var(--r1)">
+      <div class="stp-ring">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </div>
+      <div class="stp-name">MarketMind</div>
+      <div class="stp-role">Researcher</div>
+    </div>
+
+    <div class="stp-line" id="l0"></div>
+
+    <div class="stp idle" id="s1" style="--sc:var(--a2);--scr:var(--r2)">
+      <div class="stp-ring">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <div class="stp-name">BrandCraft</div>
+      <div class="stp-role">Designer</div>
+    </div>
+
+    <div class="stp-line" id="l1"></div>
+
+    <div class="stp idle" id="s2" style="--sc:var(--a3);--scr:var(--r3)">
+      <div class="stp-ring">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <div class="stp-name">ContentForge</div>
+      <div class="stp-role">Maker</div>
+    </div>
+
+    <div class="stp-line" id="l2"></div>
+
+    <div class="stp idle" id="s3" style="--sc:var(--a4);--scr:var(--r4)">
+      <div class="stp-ring">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </div>
+      <div class="stp-name">GrowthVoice</div>
+      <div class="stp-role">Communicator</div>
+    </div>
+
+    <div class="stp-line" id="l3"></div>
+
+    <div class="stp idle" id="s4" style="--sc:var(--a5);--scr:var(--r5)">
+      <div class="stp-ring">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="stp-name">StrategyLead</div>
+      <div class="stp-role">Manager</div>
+    </div>
+
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="prog-row">
+    <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+    <div class="prog-label" id="progTxt">0 / 5</div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro" id="intro">
+    <div class="intro-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    </div>
+    <div class="intro-h">Ready to build your campaign</div>
+    <div class="intro-p">Enter your API key, describe your Dublin business, and hit Launch — five AI specialists will build your complete marketing campaign step by step.</div>
+  </div>
+
+  <!-- PANELS -->
+  <div class="panels" id="panels" style="display:none">
+
+    <div class="panel idle" id="c0" style="--pc:var(--a1);--pcr:var(--r1)">
+      <div class="panel-hd" onclick="togglePanel(0)">
+        <div class="pnl-tile-wrap">
+          <div class="pnl-icon-tile">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div class="pnl-num-badge">01</div>
+        </div>
+        <div class="pnl-info">
+          <div class="pnl-name">MarketMind</div>
+          <div class="pnl-role">Market Research &amp; Intelligence &nbsp;·&nbsp; Researcher</div>
+        </div>
+        <div class="pnl-badge pb-wait" id="b0">Waiting</div>
+        <span class="pnl-chv" id="chv0">▼</span>
+      </div>
+      <div class="pnl-output" id="o0"></div>
+    </div>
+
+    <div class="panel idle" id="c1" style="--pc:var(--a2);--pcr:var(--r2)">
+      <div class="panel-hd" onclick="togglePanel(1)">
+        <div class="pnl-tile-wrap">
+          <div class="pnl-icon-tile">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="pnl-num-badge">02</div>
+        </div>
+        <div class="pnl-info">
+          <div class="pnl-name">BrandCraft</div>
+          <div class="pnl-role">Brand Strategy &amp; Creative Direction &nbsp;·&nbsp; Designer</div>
+        </div>
+        <div class="pnl-badge pb-wait" id="b1">Waiting</div>
+        <span class="pnl-chv" id="chv1">▼</span>
+      </div>
+      <div class="pnl-output" id="o1"></div>
+    </div>
+
+    <div class="panel idle" id="c2" style="--pc:var(--a3);--pcr:var(--r3)">
+      <div class="panel-hd" onclick="togglePanel(2)">
+        <div class="pnl-tile-wrap">
+          <div class="pnl-icon-tile">
+            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <div class="pnl-num-badge">03</div>
+        </div>
+        <div class="pnl-info">
+          <div class="pnl-name">ContentForge</div>
+          <div class="pnl-role">Content Creation &amp; Copywriting &nbsp;·&nbsp; Maker</div>
+        </div>
+        <div class="pnl-badge pb-wait" id="b2">Waiting</div>
+        <span class="pnl-chv" id="chv2">▼</span>
+      </div>
+      <div class="pnl-output" id="o2"></div>
+    </div>
+
+    <div class="panel idle" id="c3" style="--pc:var(--a4);--pcr:var(--r4)">
+      <div class="panel-hd" onclick="togglePanel(3)">
+        <div class="pnl-tile-wrap">
+          <div class="pnl-icon-tile">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </div>
+          <div class="pnl-num-badge">04</div>
+        </div>
+        <div class="pnl-info">
+          <div class="pnl-name">GrowthVoice</div>
+          <div class="pnl-role">Distribution &amp; Campaign Execution &nbsp;·&nbsp; Communicator</div>
+        </div>
+        <div class="pnl-badge pb-wait" id="b3">Waiting</div>
+        <span class="pnl-chv" id="chv3">▼</span>
+      </div>
+      <div class="pnl-output" id="o3"></div>
+    </div>
+
+    <div class="panel idle" id="c4" style="--pc:var(--a5);--pcr:var(--r5)">
+      <div class="panel-hd" onclick="togglePanel(4)">
+        <div class="pnl-tile-wrap">
+          <div class="pnl-icon-tile">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="pnl-num-badge">05</div>
+        </div>
+        <div class="pnl-info">
+          <div class="pnl-name">StrategyLead</div>
+          <div class="pnl-role">Executive Evaluation &amp; Oversight &nbsp;·&nbsp; Manager</div>
+        </div>
+        <div class="pnl-badge pb-wait" id="b4">Waiting</div>
+        <span class="pnl-chv" id="chv4">▼</span>
+      </div>
+      <div class="pnl-output" id="o4"></div>
+    </div>
+
+  </div>
+
+  <!-- DONE -->
+  <div class="done-wrap" id="done">
+    <div class="done-h">Campaign Complete</div>
+    <div class="done-s">All five agents delivered — your full marketing campaign is ready.</div>
+    <div class="done-acts">
+      <button class="btn-dl" onclick="download()">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Report
+      </button>
+      <button class="btn-rst" onclick="reset()">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        New Brief
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+/* ─── AGENTS ─── */
+const AGENTS = [
+  {
+    name: 'MarketMind',
+    prompt: `You are MarketMind, a senior market research analyst for Dublin SMEs. Respond in EXACTLY this format — no extra text, no markdown fences:
+
+## Target Customers
+Who: [2-3 sentences: age, lifestyle, Dublin location, values]
+Triggers: [1-2 sentences: what drives their purchase decisions]
+
+## Pain Points
+- [Specific customer frustration]
+- [Specific customer frustration]
+- [Specific customer frustration]
+
+## Competitors
+- [Competitor name] | [Their key weakness] | [Market gap they leave open]
+- [Competitor name] | [Their key weakness] | [Market gap they leave open]
+
+## Digital Gaps
+- [Missing online channel or tactic]
+- [Missing online channel or tactic]
+- [Missing online channel or tactic]
+
+## Opportunities
+1. [Short title]: [Why this is a real opportunity for this Dublin SME — 1-2 sentences]
+2. [Short title]: [Why — 1-2 sentences]
+3. [Short title]: [Why — 1-2 sentences]`
+  },
+  {
+    name: 'BrandCraft',
+    prompt: `You are BrandCraft, a marketing strategist and brand designer. You receive a Market Insight Report. Respond in EXACTLY this format:
+
+## Positioning
+[One bold sentence: where this brand uniquely stands in the Dublin market]
+
+## Brand Voice
+[Adjective] | [Adjective] | [Adjective] | [Adjective] | [Adjective]
+
+## Key Messages
+### Primary: "[Short punchy headline max 6 words]"
+[One sentence: what pain point this addresses]
+### Secondary: "[Short punchy headline]"
+[One sentence: the key differentiator]
+### Community: "[Short punchy headline]"
+[One sentence: the local community hook]
+
+## Content Pillars
+1. [Pillar Name] — [What content goes here and why it resonates — 1-2 sentences]
+2. [Pillar Name] — [What content and why]
+3. [Pillar Name] — [What content and why]
+
+## Campaigns
+### [Campaign Name]
+[Concept, mechanic, and expected outcome — 2-3 sentences]
+### [Campaign Name]
+[Concept, mechanic, and expected outcome — 2-3 sentences]`
+  },
+  {
+    name: 'ContentForge',
+    prompt: `You are ContentForge, an award-winning ad copywriter and creative director for Dublin SMEs. Respond in EXACTLY this format:
+
+## Google Ads
+Headline 1: [max 30 characters — strongest benefit]
+Headline 2: [max 30 characters — unique differentiator]
+Headline 3: [max 30 characters — location or urgency]
+Description 1: [max 90 characters — lead with the core benefit, specific to this business]
+Description 2: [max 90 characters — social proof or urgency that drives the click]
+
+## Facebook Ad
+[IMAGE: hyper-specific photorealistic scene — subject, action, lighting, colour palette, mood, 2 sentences]
+Primary Text: [Hook sentence that stops the scroll. Problem sentence the audience feels. Solution sentence positioning this business. Urgency or offer sentence.]
+Headline: [Bold benefit headline, max 40 chars]
+CTA: [2-4 word button text]
+
+## Instagram Post
+[IMAGE: lifestyle photorealistic scene different from the Facebook ad — bright, editorial, authentic Dublin feel]
+Caption: [Hook-first, 120-150 words, authentic Dublin voice, 3-4 emojis]
+Hashtags: #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10
+
+## LinkedIn Post
+[IMAGE: clean professional photorealistic scene]
+Caption: [Opens with a bold business insight, professional but human, 80-100 words]
+
+## Reel Script
+[IMAGE: cinematic vertical 9:16 thumbnail — subject, expression, lighting, composition]
+Hook: [Exact words spoken in first 3 seconds — bold question or provocative statement]
+Problem: [Seconds 3-8 — the pain point in vivid terms, show don't tell]
+Solution: [Seconds 8-20 — product or service as the hero, one specific detail]
+Proof: [Seconds 20-26 — one specific result, stat or real testimonial line]
+CTA: [Seconds 26-30 — exact call to action words]
+
+## Email
+Subject A: [Curiosity-driven subject line]
+Subject B: [Benefit-driven subject line]
+Subject C: [Urgency or social proof subject line]
+Opening: [First 2 sentences of the email body — warm, personal, Dublin voice]
+
+## SMS
+[Personal urgent message max 160 chars — reads like a friend texted you, not a brand]`
+  },
+  {
+    name: 'GrowthVoice',
+    prompt: `You are GrowthVoice, a marketing distribution and growth specialist for Dublin SMEs. Respond in EXACTLY this format — no extra text, no JSON, no markdown fences:
+
+## Channels
+[Platform] | HIGH | [Why this platform is right for this specific Dublin business — 1-2 sentences]
+[Platform] | HIGH | [Why]
+[Platform] | MEDIUM | [Why]
+[Platform] | FUTURE | [Why — what needs to be true before this is worth pursuing]
+
+## Schedule
+Mon | [Platform] | [Content type] | [Specific content topic]
+Tue | [Platform] | [Content type] | [Specific content topic]
+Wed | [Platform] | [Content type] | [Specific content topic]
+Thu | [Platform] | [Content type] | [Specific content topic]
+Fri | [Platform] | [Content type] | [Specific content topic]
+Sat | [Platform] | [Content type] | [Specific content topic]
+Sun | [Platform] | Rest/Repost | [Specific content topic]
+
+## Hashtags
+Primary: #tag1 #tag2 #tag3
+Secondary: #tag1 #tag2 #tag3 #tag4 #tag5
+Local: #Dublin #[Area] #[tag] #[tag]
+
+## Engagement
+- [Specific engagement tactic with the mechanic explained — 1 sentence]
+- [Tactic 2 — 1 sentence]
+- [Tactic 3 — 1 sentence]
+
+## Growth Tips
+1. [Actionable growth tip with the exact mechanic — 1-2 sentences]
+2. [Tip 2 — 1-2 sentences]
+3. [Tip 3 — 1-2 sentences]`
+  },
+  {
+    name: 'StrategyLead',
+    prompt: `You are StrategyLead, a senior business manager and campaign director. You receive the full pipeline output from all four agents. Respond in EXACTLY this format — no JSON, no markdown fences, no extra text:
+
+## Evaluation
+[2-3 honest sentences assessing whether this campaign is coherent, well-targeted and executable for this Dublin SME]
+
+## Strengths
+- [Specific strength referencing the agents' work — 1 sentence]
+- [Strength 2 — 1 sentence]
+- [Strength 3 — 1 sentence]
+
+## Weaknesses
+- [Specific gap or risk — be critical — 1 sentence]
+- [Weakness 2 — 1 sentence]
+
+## Priority Actions
+1. [Most important immediate action — 1-2 sentences]
+2. [Second priority — 1-2 sentences]
+3. [Third priority — 1-2 sentences]
+
+## Impact Timeline
+30 Days: [Realistic expectation at 30 days — 1-2 sentences]
+60 Days: [Realistic expectation at 60 days — 1-2 sentences]
+90 Days: [Realistic expectation at 90 days — 1-2 sentences]
+
+## Confidence
+Score: [number between 1 and 10]/10
+[One honest sentence justifying the score]`
+  }
+];
+
+/* ─── STATE ─── */
+let results = [];
+let running = false;
+const AGENT_COLORS = ['var(--a1)','var(--a2)','var(--a3)','var(--a4)','var(--a5)'];
+
+/* ─── API ─── */
+async function callAPI(systemPrompt, userMessage) {
+  const key = document.getElementById('apiKey').value.trim();
+  if (!key) throw new Error('Please enter your Anthropic API key.');
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': key,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 4096,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userMessage }]
+    })
+  });
+  if (!res.ok) {
+    const e = await res.json().catch(() => ({}));
+    throw new Error(e.error?.message || `API error ${res.status}`);
+  }
+  return (await res.json()).content[0].text;
+}
+
+/* ─── UI ─── */
+function setCard(i, state) {
+  const panel = document.getElementById(`c${i}`);
+  const step  = document.getElementById(`s${i}`);
+  const badge = document.getElementById(`b${i}`);
+  const chv   = document.getElementById(`chv${i}`);
+
+  panel.classList.remove('idle','working','done','collapsed','expanded');
+  step.classList.remove('idle','working','done');
+
+  if (state === 'active') {
+    panel.classList.add('working');
+    step.classList.add('working');
+    badge.className = 'pnl-badge pb-working';
+    badge.textContent = 'Working…';
+    chv.style.visibility = 'hidden';
+  } else if (state === 'done') {
+    panel.classList.add('done','expanded');
+    step.classList.add('done');
+    badge.className = 'pnl-badge pb-done';
+    badge.textContent = 'Done';
+    chv.style.visibility = 'visible';
+    if (i < 4) {
+      const ln = document.getElementById(`l${i}`);
+      ln.classList.add('lit');
+      ln.style.setProperty('--lc', AGENT_COLORS[i + 1]);
+    }
+  } else {
+    panel.classList.add('idle');
+    step.classList.add('idle');
+    badge.className = 'pnl-badge pb-wait';
+    badge.textContent = 'Waiting';
+    chv.style.visibility = 'hidden';
+  }
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function pollinationsUrl(prompt, w, h, seed) {
+  /* Truncate to 120 chars at a word boundary — shorter prompts generate faster */
+  let p = prompt.trim();
+  if (p.length > 120) p = p.slice(0, 120).replace(/\s\S*$/, '').trim();
+  return `https://image.pollinations.ai/prompt/${encodeURIComponent(p)}?model=turbo&width=${w}&height=${h}&nologo=true&seed=${seed}`;
+}
+
+function imgCard(prompt, w, h, s) {
+  const dw = Math.round(w / 2), dh = Math.round(h / 2);
+  const url = pollinationsUrl(prompt, dw, dh, s);
+  const cap = prompt.length > 110 ? prompt.slice(0, 110) + '…' : prompt;
+  return `<div class="cf-img-wrap">
+    <div class="cf-img-loader">
+      <span>Generating image</span>
+      <span class="cf-img-dots"><span>.</span><span>.</span><span>.</span></span>
+    </div>
+    <img src="${url}" class="cf-img"
+      data-prompt="${escHtml(prompt)}" data-w="${dw}" data-h="${dh}"
+      onload="this.previousElementSibling.style.display='none';this.style.display='block'"
+      onerror="imgFailed(this)"
+      style="display:none"/>
+    <div class="cf-img-cap">${escHtml(cap)}</div>
+  </div>`;
+}
+
+function imgFailed(img) {
+  const loader = img.previousElementSibling;
+  img.style.display = 'none';
+  const btn = document.createElement('button');
+  btn.textContent = 'Retry';
+  btn.style.cssText = 'cursor:pointer;background:none;border:1px solid #dc2626;color:#dc2626;border-radius:5px;padding:2px 10px;font-size:11px;margin-left:8px;font-family:inherit';
+  btn.onclick = () => imgRetry(img);
+  loader.innerHTML = '';
+  loader.appendChild(document.createTextNode('Image unavailable — '));
+  loader.appendChild(btn);
+}
+
+function imgRetry(img) {
+  const loader = img.previousElementSibling;
+  loader.innerHTML = '<span>Retrying\u2026</span><span class="cf-img-dots"><span>.</span><span>.</span><span>.</span></span>';
+  img.style.display = 'none';
+  /* Use a fresh seed so Pollinations doesn't serve a cached error response */
+  const freshUrl = pollinationsUrl(img.dataset.prompt || '', parseInt(img.dataset.w) || 256, parseInt(img.dataset.h) || 256, Date.now() % 99999);
+  img.src = freshUrl;
+  img.onload  = () => { loader.style.display = 'none'; img.style.display = 'block'; };
+  img.onerror = () => { loader.innerHTML = '<span style="color:#9a3412">Still unavailable — check your connection and retry</span>'; };
+}
+
+/* ── MARKDOWN PARSER ── */
+function parseMarkdownSections(text) {
+  const sections = {};
+  const parts = text.split(/^## /m);
+  for (const part of parts) {
+    if (!part.trim()) continue;
+    const nl = part.indexOf('\n');
+    const header = (nl === -1 ? part : part.slice(0, nl)).trim().toLowerCase();
+    const body   = nl === -1 ? '' : part.slice(nl + 1).trim();
+    sections[header] = body;
+  }
+  return sections;
+}
+
+function mdField(body, field) {
+  const m = body.match(new RegExp('^' + field + ':\\s*(.+)', 'im'));
+  return m ? m[1].trim() : '';
+}
+
+function mdImagePrompt(body) {
+  const m = body.match(/\[IMAGE:\s*([\s\S]*?)\]/i);
+  return m ? m[1].trim() : '';
+}
+
+function mdBullets(body) {
+  return body.split('\n').filter(l => l.trim().startsWith('-')).map(l => l.replace(/^-\s*/,'').trim());
+}
+
+function mdNumbered(body) {
+  return body.split('\n').filter(l => /^\d+\./.test(l.trim())).map(l => l.replace(/^\d+\.\s*/,'').trim());
+}
+
+/* ── AGENT RENDERERS ── */
+function renderMarketMind(text) {
+  const secs = parseMarkdownSections(text);
+
+  const custBody  = secs['target customers'] || '';
+  const whoText   = mdField(custBody, 'Who');
+  const trigText  = mdField(custBody, 'Triggers');
+
+  const pain = mdBullets(secs['pain points'] || '').map(p =>
+    `<div class="r-alert r-alert--warn"><div class="r-alert-ico">⚡</div><div>${escHtml(p)}</div></div>`).join('');
+
+  const comp = mdBullets(secs['competitors'] || '').map(l => {
+    const [name, weakness, gap] = l.split('|').map(s => s.trim());
+    return `<div class="r-comp"><div class="r-comp-name">${escHtml(name||'')}</div><div class="r-comp-w">⚠ ${escHtml(weakness||'')}</div><div class="r-comp-g">✓ ${escHtml(gap||'')}</div></div>`;
+  }).join('');
+
+  const gaps = mdBullets(secs['digital gaps'] || '').map(g =>
+    `<span class="r-pill r-pill--m">${escHtml(g)}</span>`).join('');
+
+  const opps = mdNumbered(secs['opportunities'] || '').map((o, i) => {
+    const ci = o.indexOf(':');
+    const title  = ci > -1 ? o.slice(0, ci).trim() : o;
+    const detail = ci > -1 ? o.slice(ci + 1).trim() : '';
+    return `<div class="r-opp"><div class="r-opp-n">${i+1}</div><div><div class="r-opp-title">${escHtml(title)}</div><div class="r-opp-detail">${escHtml(detail)}</div></div></div>`;
+  }).join('');
+
+  return `
+    <div class="r-block"><div class="r-tag">👤 Your Target Customers</div>
+      <div class="r-profile"><div class="r-avatar">🎯</div><div><div class="r-profile-text">${escHtml(whoText)}</div><div class="r-profile-sub"><strong>What triggers them:</strong> ${escHtml(trigText)}</div></div></div></div>
+    <div class="r-block"><div class="r-tag">💢 What They're Frustrated By</div>${pain}</div>
+    <div class="r-block"><div class="r-tag">🏆 Who You're Up Against</div>${comp}</div>
+    <div class="r-block"><div class="r-tag">📡 Where You're Missing Online</div><div class="r-pills">${gaps}</div></div>
+    <div class="r-block"><div class="r-tag">🚀 Your Biggest Opportunities</div>${opps}</div>`;
+}
+
+function renderBrandCraft(text) {
+  const secs = parseMarkdownSections(text);
+
+  const positioning = (secs['positioning'] || '').trim();
+
+  const voice = (secs['brand voice'] || '').split('|').map((v, i) =>
+    `<span class="r-voice-pill r-vp${i}">${escHtml(v.trim())}</span>`).join('');
+
+  const msgSec = secs['key messages'] || '';
+  const typeIco = {Primary:'⭐', Secondary:'💡', Community:'🤝'};
+  const msgs = msgSec.split(/^### /m).filter(p => p.trim()).map(m => {
+    const nl = m.indexOf('\n');
+    const header = (nl === -1 ? m : m.slice(0, nl)).trim();
+    const body   = nl === -1 ? '' : m.slice(nl + 1).trim();
+    const ci = header.indexOf(':');
+    const type     = ci > -1 ? header.slice(0, ci).trim() : header;
+    const headline = ci > -1 ? header.slice(ci + 1).trim().replace(/^"|"$/g,'') : '';
+    return `<div class="r-msg"><div class="r-msg-type">${typeIco[type]||'•'} ${escHtml(type)}</div><div class="r-msg-hl">"${escHtml(headline)}"</div><div class="r-msg-body">${escHtml(body)}</div></div>`;
+  }).join('');
+
+  const pillars = mdNumbered(secs['content pillars'] || '').map((p, i) => {
+    const di = p.indexOf(' — ');
+    const name = di > -1 ? p.slice(0, di).trim() : p;
+    const desc = di > -1 ? p.slice(di + 3).trim() : '';
+    return `<div class="r-pillar"><div class="r-pillar-n">${i+1}</div><div><div class="r-pillar-name">${escHtml(name)}</div><div class="r-pillar-desc">${escHtml(desc)}</div></div></div>`;
+  }).join('');
+
+  const camps = (secs['campaigns'] || '').split(/^### /m).filter(p => p.trim()).map(c => {
+    const nl = c.indexOf('\n');
+    const title   = (nl === -1 ? c : c.slice(0, nl)).trim();
+    const concept = nl === -1 ? '' : c.slice(nl + 1).trim();
+    return `<div class="r-camp"><div class="r-camp-title">🎯 ${escHtml(title)}</div><div class="r-camp-concept">${escHtml(concept)}</div></div>`;
+  }).join('');
+
+  return `
+    <div class="r-block"><div class="r-tag">📍 Your Brand's Place in Dublin</div><div class="r-quote">"${escHtml(positioning)}"</div></div>
+    <div class="r-block"><div class="r-tag">🎙 How Your Brand Speaks</div><div class="r-pills">${voice}</div></div>
+    <div class="r-block"><div class="r-tag">💬 What to Say to Customers</div>${msgs}</div>
+    <div class="r-block"><div class="r-tag">🏛 Your 3 Content Pillars</div>${pillars}</div>
+    <div class="r-block"><div class="r-tag">🚀 Campaign Ideas</div>${camps}</div>`;
+}
+
+function renderContentForge(text) {
+  const s = Date.now() % 99999;
+  const secs = parseMarkdownSections(text);
+
+  const gadsBody  = secs['google ads']    || '';
+  const fbAdBody  = secs['facebook ad']   || '';
+  const igBody    = secs['instagram post']|| secs['instagram'] || '';
+  const liBody    = secs['linkedin post'] || secs['linkedin']  || '';
+  const reelBody  = secs['reel script']   || '';
+  /* email section — accept any header that starts with "email" */
+  const emBody    = secs['email'] || Object.entries(secs).find(([k]) => /^email/.test(k))?.[1] || '';
+  const smsBody   = secs['sms']           || '';
+
+  /* ── Google Ads ── */
+  const gHL1  = mdField(gadsBody,'Headline 1');
+  const gHL2  = mdField(gadsBody,'Headline 2');
+  const gHL3  = mdField(gadsBody,'Headline 3');
+  const gD1   = mdField(gadsBody,'Description 1');
+  const gD2   = mdField(gadsBody,'Description 2');
+  function charBadge(lbl, val) {
+    const n = val.length, ok = n <= (lbl.startsWith('H') ? 30 : 90);
+    return `<span class="gads-char"><strong>${lbl}</strong> ${n} chars${ok ? '' : ' ⚠'}</span>`;
+  }
+
+  /* ── Facebook Ad ── */
+  const fbPrimary = fbAdBody.replace(/\[IMAGE:[^\]]*\]/gi,'').replace(/^Primary Text:\s*/im,'').split('\n').filter(l => l.trim() && !/^(Headline|CTA):/i.test(l)).join(' ').trim();
+  const fbHL  = mdField(fbAdBody,'Headline');
+  const fbCTA = mdField(fbAdBody,'CTA');
+
+  /* ── Instagram ── */
+  const igTags = (mdField(igBody,'Hashtags')).split(/\s+/).filter(h => h.startsWith('#'))
+    .map(h => `<span class="r-pill r-pill--h">${escHtml(h)}</span>`).join('');
+
+  /* ── Email ── */
+  /* Accept "Subject A:", "A:", "Subject A :" etc. */
+  const emails = emBody.split('\n').filter(l => /^(?:Subject\s+)?[ABC]\s*:/i.test(l.trim())).map((e, i) => {
+    const txt = e.replace(/^(?:Subject\s+)?[ABC]\s*:\s*/i,'').trim();
+    return `<div class="r-email"><div class="r-email-ab">${['A','B','C'][i]}</div><div class="r-email-txt">${escHtml(txt)}</div></div>`;
+  }).join('');
+  /* Opening may span 2 sentences across multiple lines — capture until blank line or end */
+  const openingMatch = emBody.match(/^Opening\s*:\s*([\s\S]+?)(?=\n\n|\n[A-Z]|\s*$)/im);
+  const emailOpening = openingMatch ? openingMatch[1].replace(/\n/g,' ').trim() : '';
+
+  /* ── Reel Script ── */
+  const reelRows = [
+    {time:'0–3s',  label:'Hook',     val: mdField(reelBody,'Hook')},
+    {time:'3–8s',  label:'Problem',  val: mdField(reelBody,'Problem')},
+    {time:'8–20s', label:'Solution', val: mdField(reelBody,'Solution')},
+    {time:'20–26s',label:'Proof',    val: mdField(reelBody,'Proof')},
+    {time:'26–30s',label:'CTA',      val: mdField(reelBody,'CTA')}
+  ].map(r => `<div class="reel-row"><div class="reel-timecol">${r.time}</div><div class="reel-labelcol">${r.label}</div><div class="reel-textcol">${escHtml(r.val)}</div></div>`).join('');
+
+  return `
+    <!-- AD COPY: GOOGLE ADS -->
+    <div class="r-block">
+      <div class="r-tag" style="margin-bottom:10px">🔍 Google Search Ad</div>
+      <div class="gads-wrap">
+        <div class="gads-top">
+          <span class="gads-badge">Ad</span>
+          <span class="gads-url">yourbusiness.ie › dublin › offer</span>
+        </div>
+        <div class="gads-headlines">${escHtml(gHL1)}<span>·</span>${escHtml(gHL2)}<span>·</span>${escHtml(gHL3)}</div>
+        <div class="gads-desc">${escHtml(gD1)}</div>
+        <div class="gads-desc">${escHtml(gD2)}</div>
+        <div class="gads-chars">
+          ${charBadge('H1',gHL1)}${charBadge('H2',gHL2)}${charBadge('H3',gHL3)}
+          ${charBadge('D1',gD1)}${charBadge('D2',gD2)}
+        </div>
+      </div>
+    </div>
+
+    <!-- AD COPY: FACEBOOK AD -->
+    <div class="r-block">
+      <div class="r-tag" style="margin-bottom:10px">🎯 Facebook / Instagram Ad</div>
+      <div class="fb-ad-wrap">
+        <div class="fb-ad-header">
+          <div class="sm-avatar sm-avatar--fb">N</div>
+          <div>
+            <div class="fb-ad-page">Nexus Dublin</div>
+            <div class="fb-ad-sponsored">Sponsored · 🌍</div>
+          </div>
+        </div>
+        <div class="fb-ad-primary">${escHtml(fbPrimary)}</div>
+        ${imgCard(mdImagePrompt(fbAdBody)||'high-impact Dublin business ad visual',600,315,s)}
+        <div class="fb-ad-footer">
+          <div class="fb-ad-copy">
+            <div class="fb-ad-hl">${escHtml(fbHL)}</div>
+          </div>
+          <div class="fb-ad-cta-btn">${escHtml(fbCTA)||'Learn More'}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPT: REEL / TIKTOK -->
+    <div class="r-block">
+      <div class="r-tag" style="margin-bottom:10px">🎬 30-Second Reel / TikTok Script</div>
+      <div class="reel-card">
+        <div class="reel-phone-wrap">
+          <div class="reel-phone-inner">
+            ${imgCard(mdImagePrompt(reelBody)||'cinematic vertical video thumbnail Dublin',270,480,s+1)}
+            <div class="reel-play">▶</div>
+          </div>
+        </div>
+        <div class="reel-script-rows">${reelRows}</div>
+      </div>
+    </div>
+
+    <!-- CREATIVE ASSET: INSTAGRAM -->
+    <div class="r-block">
+      <div class="r-plat r-plat--ig">📸 Instagram Post</div>
+      <div class="sm-card sm-card--ig">
+        <div class="sm-card-header">
+          <div class="sm-avatar sm-avatar--ig">N</div>
+          <div><div class="sm-handle">nexus_dublin</div><div class="sm-loc">📍 Dublin, Ireland</div></div>
+          <div class="sm-more">···</div>
+        </div>
+        ${imgCard(mdImagePrompt(igBody)||'vibrant Dublin lifestyle photo',512,512,s+2)}
+        <div class="sm-actions">
+          <span class="sm-action">🤍</span><span class="sm-action">💬</span><span class="sm-action">✈️</span>
+          <span class="sm-action sm-save">🔖</span>
+        </div>
+        <div class="sm-caption"><strong>nexus_dublin</strong> ${escHtml(mdField(igBody,'Caption'))}</div>
+        <div class="r-pills sm-tags">${igTags}</div>
+      </div>
+    </div>
+
+    <!-- CREATIVE ASSET: LINKEDIN -->
+    <div class="r-block">
+      <div class="r-plat r-plat--li">💼 LinkedIn Post</div>
+      <div class="sm-card sm-card--li">
+        <div class="sm-card-header">
+          <div class="sm-avatar sm-avatar--li">N</div>
+          <div><div class="sm-handle">Nexus Dublin</div><div class="sm-loc">Business · Dublin</div></div>
+        </div>
+        <div class="sm-fb-caption">${escHtml(mdField(liBody,'Caption'))}</div>
+        ${imgCard(mdImagePrompt(liBody)||'professional business photo Dublin',600,315,s+3)}
+        <div class="sm-fb-react"><span>👍 Like</span><span>💡 Insightful</span><span>♻ Repost</span></div>
+      </div>
+    </div>
+
+    <!-- AD COPY: EMAIL + SMS -->
+    <div class="r-block cf-two-col">
+      <div>
+        <div class="r-plat r-plat--em">✉️ Email Campaign</div>
+        <div class="email-preview">${emails}</div>
+        ${emailOpening ? `<div style="margin-top:8px;padding:10px 12px;background:var(--surface2);border-radius:8px;font-size:12.5px;color:var(--body);line-height:1.6;border:1px solid var(--border)">${escHtml(emailOpening)}</div>` : ''}
+      </div>
+      <div>
+        <div class="r-plat r-plat--sms">💬 SMS / WhatsApp</div>
+        <div class="sms-phone">
+          <div class="sms-screen">
+            <div class="sms-bubble">${escHtml(smsBody.replace(/\[IMAGE:[^\]]*\]/gi,'').trim())}</div>
+            <div class="sms-time">Delivered</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderGrowthVoice(text) {
+  const secs = parseMarkdownSections(text);
+  const pc = {HIGH:{c:'#059669',bg:'#ecfdf5',b:'#a7f3d0'},MEDIUM:{c:'#d97706',bg:'#fffbeb',b:'#fde68a'},FUTURE:{c:'#6366f1',bg:'#eef2ff',b:'#c7d2fe'}};
+
+  const chans = (secs['channels']||'').split('\n').filter(l => l.trim() && l.includes('|')).map(l => {
+    const [platform, pri, ...rest] = l.split('|').map(s => s.trim());
+    const priority = (pri||'FUTURE').toUpperCase();
+    const reason   = rest.join('|').trim();
+    const col = pc[priority] || pc.FUTURE;
+    return `<div class="r-chan" style="border-color:${col.b};background:${col.bg}"><div class="r-chan-top"><div class="r-chan-name">${escHtml(platform)}</div><span class="r-chan-pri" style="color:${col.c};background:${col.bg};border-color:${col.b}">${escHtml(priority)}</span></div><div class="r-chan-why">${escHtml(reason)}</div></div>`;
+  }).join('');
+
+  const sched = (secs['schedule']||'').split('\n').filter(l => l.trim() && l.includes('|')).map(l => {
+    const [day, plat, type, ...topicParts] = l.split('|').map(s => s.trim());
+    return `<div class="r-sched-row"><div class="r-sched-day">${escHtml(day||'')}</div><div class="r-sched-body"><div class="r-sched-plat">${escHtml(plat||'')}</div><div class="r-sched-type">${escHtml(type||'')}</div><div class="r-sched-topic">${escHtml(topicParts.join('|').trim())}</div></div></div>`;
+  }).join('');
+
+  const htSec = secs['hashtags'] || '';
+  const priMatch = htSec.match(/Primary:\s*(.+)/i);
+  const secMatch = htSec.match(/Secondary:\s*(.+)/i);
+  const locMatch = htSec.match(/Local:\s*(.+)/i);
+  const htPri = (priMatch ? priMatch[1].trim().split(/\s+/) : []).map(h => `<span class="r-pill r-pill--g">${escHtml(h)}</span>`).join('');
+  const htSec2 = (secMatch ? secMatch[1].trim().split(/\s+/) : []).map(h => `<span class="r-pill r-pill--b">${escHtml(h)}</span>`).join('');
+  const htLoc  = (locMatch ? locMatch[1].trim().split(/\s+/) : []).map(h => `<span class="r-pill r-pill--p">${escHtml(h)}</span>`).join('');
+
+  const eng  = mdBullets(secs['engagement']||'').map(e => `<div class="r-tip"><div class="r-tip-arrow">→</div>${escHtml(e)}</div>`).join('');
+  const tips = mdNumbered(secs['growth tips']||'').map((t, i) => `<div class="r-opp"><div class="r-opp-n">${i+1}</div><div><div class="r-opp-detail">${escHtml(t)}</div></div></div>`).join('');
+
+  return `
+    <div class="r-block"><div class="r-tag">📡 Where to Show Up</div><div class="r-channels">${chans}</div></div>
+    <div class="r-block"><div class="r-tag">📅 Your Weekly Plan</div><div class="r-sched">${sched}</div></div>
+    <div class="r-block"><div class="r-tag"># Hashtag Toolkit</div>
+      <div class="r-ht-grp"><div class="r-ht-lbl">Must-use every post</div><div class="r-pills">${htPri}</div></div>
+      <div class="r-ht-grp"><div class="r-ht-lbl">Rotate these</div><div class="r-pills">${htSec2}</div></div>
+      <div class="r-ht-grp"><div class="r-ht-lbl">Dublin local</div><div class="r-pills">${htLoc}</div></div></div>
+    <div class="r-block"><div class="r-tag">💬 How to Build Engagement</div>${eng}</div>
+    <div class="r-block"><div class="r-tag">📈 Growth Tips</div>${tips}</div>`;
+}
+
+function renderStrategyLead(text) {
+  const secs = parseMarkdownSections(text);
+
+  const evaluation = (secs['evaluation'] || '').trim();
+
+  const str  = mdBullets(secs['strengths']||'').map(s => `<div class="r-sw-item r-sw-str"><span class="r-sw-ico">✓</span><span>${escHtml(s)}</span></div>`).join('');
+  const wk   = mdBullets(secs['weaknesses']||'').map(w => `<div class="r-sw-item r-sw-wk"><span class="r-sw-ico">!</span><span>${escHtml(w)}</span></div>`).join('');
+  const recs = mdNumbered(secs['priority actions']||'').map((r, i) => `<div class="r-rec"><div class="r-rec-p">P${i+1}</div><div class="r-rec-act">${escHtml(r)}</div></div>`).join('');
+
+  const impSec = secs['impact timeline'] || '';
+  const d30 = (impSec.match(/30\s*Days?:\s*(.+)/i)||[])[1] || '';
+  const d60 = (impSec.match(/60\s*Days?:\s*(.+)/i)||[])[1] || '';
+  const d90 = (impSec.match(/90\s*Days?:\s*(.+)/i)||[])[1] || '';
+
+  const confSec    = secs['confidence'] || '';
+  const scoreMatch = confSec.match(/Score:\s*(\d+)/i);
+  const sc         = scoreMatch ? parseInt(scoreMatch[1]) : 0;
+  const confReason = confSec.replace(/Score:\s*\d+\/?\d*\s*/i,'').trim();
+  const col = sc>=8?'#059669':sc>=6?'#d97706':'#dc2626';
+  const bg  = sc>=8?'#ecfdf5':sc>=6?'#fffbeb':'#fff1f2';
+  const bdr = sc>=8?'#a7f3d0':sc>=6?'#fde68a':'#fecdd3';
+
+  return `
+    <div class="r-block"><div class="r-tag">📋 Overall Assessment</div><div class="r-eval">${escHtml(evaluation)}</div></div>
+    <div class="r-block"><div class="r-sw">
+      <div><div class="r-tag r-tag--g">✓ What's Working</div>${str}</div>
+      <div><div class="r-tag r-tag--a">! Watch Out For</div>${wk}</div>
+    </div></div>
+    <div class="r-block"><div class="r-tag">🎯 Your Priority Actions</div>${recs}</div>
+    <div class="r-block"><div class="r-tag">📈 What to Expect</div>
+      <div class="r-tl">
+        <div class="r-tl-item"><div class="r-tl-dot"></div><div><div class="r-tl-label">30 Days</div><div class="r-tl-text">${escHtml(d30.trim())}</div></div></div>
+        <div class="r-tl-item"><div class="r-tl-dot"></div><div><div class="r-tl-label">60 Days</div><div class="r-tl-text">${escHtml(d60.trim())}</div></div></div>
+        <div class="r-tl-item"><div class="r-tl-dot r-tl-dot--last"></div><div><div class="r-tl-label">90 Days</div><div class="r-tl-text">${escHtml(d90.trim())}</div></div></div>
+      </div></div>
+    <div class="r-block"><div class="r-tag">🎯 Confidence Score</div>
+      <div class="r-score" style="border-color:${bdr};background:${bg}">
+        <div class="r-score-n" style="color:${col}">${sc}<span class="r-score-d">/10</span></div>
+        <div class="r-score-right"><div class="r-score-bar"><div class="r-score-fill" style="width:${sc*10}%;background:${col}"></div></div><div class="r-score-why">${escHtml(confReason)}</div></div>
+      </div></div>`;
+}
+
+const RENDERERS = [renderMarketMind, renderBrandCraft, renderContentForge, renderGrowthVoice, renderStrategyLead];
+
+function showResult(i, text) {
+  const el = document.getElementById(`o${i}`);
+  el.innerHTML = RENDERERS[i](text);
+  el.className = 'pnl-output show';
+}
+
+function togglePanel(i) {
+  const panel = document.getElementById(`c${i}`);
+  if (!panel.classList.contains('done')) return;
+  const out = document.getElementById(`o${i}`);
+  const isOpen = out.classList.contains('show');
+  if (isOpen) {
+    out.classList.remove('show');
+    panel.classList.remove('expanded');
+    panel.classList.add('collapsed');
+  } else {
+    out.classList.add('show');
+    panel.classList.remove('collapsed');
+    panel.classList.add('expanded');
+  }
+}
+
+function setProgress(pct, done) {
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('progTxt').textContent = done + ' / 5';
+}
+
+function showErr(msg) {
+  const el = document.getElementById('err');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function hideErr() { document.getElementById('err').style.display = 'none'; }
+
+/* Converts ContentForge's markdown result into a short plain-text summary
+   so GrowthVoice / StrategyLead aren't fed the full content wall. */
+function cfSummary(raw) {
+  try {
+    const secs    = parseMarkdownSections(raw);
+    const gads    = secs['google ads']    || '';
+    const fbAd    = secs['facebook ad']   || '';
+    const igBody  = secs['instagram post']|| secs['instagram'] || '';
+    const emBody  = secs['email'] || Object.entries(secs).find(([k]) => /^email/.test(k))?.[1] || '';
+    const smsBody = secs['sms']           || '';
+    const reelBody= secs['reel script']   || '';
+
+    const igTags  = (mdField(igBody,'Hashtags')||'').split(/\s+/).filter(h => h.startsWith('#'));
+    const fbHL    = mdField(fbAd,'Headline');
+    const fbCTA   = mdField(fbAd,'CTA');
+    const gHL1    = mdField(gads,'Headline 1');
+    const smsText = smsBody.replace(/\[IMAGE:[^\]]*\]/gi,'').trim().slice(0,80);
+    const emailLines = emBody.split('\n').filter(l => /^(?:Subject\s+)?[ABC]\s*:/i.test(l.trim())).map(l => l.replace(/^(?:Subject\s+)?[ABC]\s*:\s*/i,'').trim());
+    const reelHook = mdField(reelBody,'Hook');
+
+    return [
+      'Ad Copy, Scripts & Creative Assets produced:',
+      gHL1   ? `- Google Ads — "${gHL1}" (+ 2 more headlines, 2 descriptions)` : '- Google Ads copy',
+      fbHL   ? `- Facebook/Instagram Ad — headline: "${fbHL}" | CTA: "${fbCTA}"` : '- Facebook Ad copy',
+      `- Instagram post (caption + image + ${igTags.length} hashtags)`,
+      '- LinkedIn post (caption + image)',
+      reelHook ? `- 30-sec Reel script — hook: "${reelHook}"` : '- Reel/TikTok script',
+      emailLines.length ? `- Email subjects: ${emailLines.join(' / ')}` : '- Email subject lines',
+      smsText ? `- SMS: "${smsText}…"` : '- SMS'
+    ].join('\n');
+  } catch(e) {
+    return 'Content assets: Google Ads, Facebook Ad, Instagram post, LinkedIn post, Reel script, Email subjects, SMS.';
+  }
+}
+
+/* ─── RUN ─── */
+async function run() {
+  if (running) return;
+  const key   = document.getElementById('apiKey').value.trim();
+  const brief = document.getElementById('brief').value.trim();
+  if (!key)   { showErr('Please enter your Anthropic API key first.'); return; }
+  if (!brief) { showErr('Please describe your Dublin-based business first.'); return; }
+
+  hideErr();
+  running = true;
+  results = [];
+  document.getElementById('goBtn').disabled = true;
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('panels').style.display = 'flex';
+  document.getElementById('done').className = 'done-wrap';
+
+  for (let i = 0; i < 5; i++) {
+    setCard(i, 'idle');
+    const o = document.getElementById(`o${i}`);
+    o.className = 'pnl-output';
+    o.textContent = '';
+    document.getElementById(`chv${i}`).style.visibility = 'hidden';
+    if (i < 4) {
+      const l = document.getElementById(`l${i}`);
+      l.classList.remove('lit');
+      l.style.removeProperty('--lc');
+    }
+  }
+  setProgress(4, 0);
+
+  try {
+    for (let i = 0; i < AGENTS.length; i++) {
+      setCard(i, 'active');
+      document.getElementById(`c${i}`).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      let msg;
+      if (i === 0) {
+        msg = `Business Description:\n${brief}\n\nProduce your Market Insight Report now.`;
+      } else if (i === 1) {
+        msg = `Business Description:\n${brief}\n\n--- MARKET INSIGHT REPORT (MarketMind) ---\n${results[0]}\n\nProduce your Marketing Strategy Plan now.`;
+      } else if (i === 2) {
+        msg = `Business Description:\n${brief}\n\n--- MARKET INSIGHT REPORT ---\n${results[0]}\n\n--- MARKETING STRATEGY PLAN (BrandCraft) ---\n${results[1]}\n\nProduce your Content Package now.`;
+      } else if (i === 3) {
+        msg = `Business Description:\n${brief}\n\n--- BRAND STRATEGY (BrandCraft) ---\n${results[1]}\n\n--- CONTENT SUMMARY (ContentForge) ---\n${cfSummary(results[2])}\n\nProduce your Campaign Execution Plan now.`;
+      } else {
+        msg = `Business Description:\n${brief}\n\n--- MARKET INSIGHT REPORT (MarketMind) ---\n${results[0]}\n\n--- BRAND STRATEGY (BrandCraft) ---\n${results[1]}\n\n--- CONTENT SUMMARY (ContentForge) ---\n${cfSummary(results[2])}\n\n--- CAMPAIGN EXECUTION PLAN (GrowthVoice) ---\n${results[3]}\n\nProduce your Executive Evaluation now.`;
+      }
+
+      const text = await callAPI(AGENTS[i].prompt, msg);
+      results.push(text);
+      showResult(i, text);
+      setCard(i, 'done');
+      setProgress(20 * (i + 1), i + 1);
+    }
+
+    document.getElementById('done').className = 'done-wrap show';
+    document.getElementById('done').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  } catch (err) {
+    showErr(err.message);
+    for (let i = 0; i < 5; i++) {
+      if (document.getElementById(`b${i}`).textContent === 'Working…') setCard(i, 'idle');
+    }
+  }
+
+  running = false;
+  document.getElementById('goBtn').disabled = false;
+}
+
+/* ─── DOWNLOAD ─── */
+function download() {
+  const brief = document.getElementById('brief').value.trim();
+  const labels = [
+    'MARKET INSIGHT REPORT — MarketMind (Researcher)',
+    'MARKETING STRATEGY PLAN — BrandCraft (Designer)',
+    'CONTENT PACKAGE — ContentForge (Maker)',
+    'CAMPAIGN EXECUTION PLAN — GrowthVoice (Communicator)',
+    'EXECUTIVE EVALUATION — StrategyLead (Manager)'
+  ];
+  const line = '='.repeat(60);
+  let out = `NEXUS — FULL CAMPAIGN REPORT\n${line}\nBusiness: ${brief}\nDate: ${new Date().toLocaleDateString('en-IE',{day:'numeric',month:'long',year:'numeric'})}\n\n`;
+  results.forEach((r,i) => { out += `${line}\n${labels[i]}\n${line}\n${r}\n\n`; });
+  out += `${line}\nGenerated by Nexus · One Brief. Five Agents. A Campaign That Works.\nPowered by Claude Haiku 4.5 — Anthropic\n`;
+  const blob = new Blob([out], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Nexus_Campaign_Report.txt';
+  a.click();
+}
+
+/* ─── RESET ─── */
+function reset() {
+  results = [];
+  document.getElementById('brief').value = '';
+  document.getElementById('done').className = 'done-wrap';
+  document.getElementById('panels').style.display = 'none';
+  document.getElementById('intro').style.display = '';
+  setProgress(0, 0);
+  for (let i = 0; i < 5; i++) {
+    setCard(i, 'idle');
+    const o = document.getElementById(`o${i}`);
+    o.className = 'pnl-output';
+    o.textContent = '';
+    if (i < 4) {
+      const l = document.getElementById(`l${i}`);
+      l.classList.remove('lit');
+      l.style.removeProperty('--lc');
+    }
+  }
+  hideErr();
+}
+</script>
+</body>
+</html>
